@@ -15,6 +15,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 # from PageObject.Popupwindow import Popupwindow
+from PageObject.Popupwindow import Popupwindow
+from PageObject.add_form import Add_form
 from PageObject.event_questionnaire import Event_questionnaire_tab
 from PageObject.eventdiarypage import eventdiarypage
 from PageObject.login_page import Loginpage
@@ -63,10 +65,10 @@ class TestEpo(Baseclass):
             #allure.attach(self.driver.get_screenshot_as_png(), name="testscreenshot",
             #          attachment_type=AttachmentType.PNG)
 
-    # #@allure.description('To close the popup window')
-    # def test_TC_06_popup_window(self):
-    #   popupwindow = Popupwindow(self.driver)
-    #   popupwindow.popup().click()
+    @allure.description('To close the popup window')
+    def test_TC_06_popup_window(self):
+      popupwindow = Popupwindow(self.driver)
+      popupwindow.popup().click()
 
     #@allure.description('when successfully logged in to check the title for confirmation')
     def test_TC_07_logged_conformation(self):
@@ -93,45 +95,46 @@ class TestEpo(Baseclass):
         time.sleep(4)
 
     def test_tc_10_add_form(self):
+        add_form = Add_form(self.driver)
         time.sleep(3)
-        self.driver.find_element_by_xpath('//a[@ptooltip="Add Form"]').click()
+        add_form.Add_form_button().click()
         time.sleep(3)
-        self.driver.find_element_by_id('titlename').send_keys('vendor query')
+        add_form.Form_name().send_keys('vendor query')
         time.sleep(3)
-        self.driver.find_element_by_id('titledes').send_keys('To get the question about lease of product')
+        add_form.Titledesc().send_keys('To get the question about lease of product')
         time.sleep(3)
-        self.driver.find_element_by_id('questionname').send_keys('How many product produce per day')
+        add_form.Enter_question_name().send_keys('How many product produce per day')
         time.sleep(3)
-        self.driver.find_element_by_xpath('//app-add-question[1]/div[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[4]/div[2]/div[1]/p-dropdown[1]/div[1]/div[3]').click()
+        add_form.Questiontype_select().click()
         time.sleep(3)
-        self.driver.find_element_by_xpath('//div[@class="ui-dropdown-items-wrapper"]//ul//p-dropdownitem[3]//li').click()
+        add_form.Option_select().click()
         time.sleep(3)
-        self.driver.find_element_by_tag_name('p-inputswitch').click()
+        add_form.Required_key().click()
         time.sleep(3)
-        self.driver.find_element_by_xpath('//button[@data-tour="addQuestion"]').click()
+        add_form.Add_question().click()
         time.sleep(3)
-        self.driver.find_element_by_xpath('//input[@ng-reflect-model="Choice 1"]').clear()
+        add_form.Edit_choice1().clear()
         time.sleep(3)
-        self.driver.find_element_by_xpath('//input[@ng-reflect-model="Choice 1"]').send_keys('5')
+        add_form.Edit_choice1().send_keys('5')
         time.sleep(3)
-        self.driver.find_element_by_xpath('//input[@ng-reflect-model="Choice 2"]').clear()
+        add_form.Edit_choice2().clear()
         time.sleep(3)
-        self.driver.find_element_by_xpath('//input[@ng-reflect-model="Choice 2"]').send_keys('7')
+        add_form.Edit_choice2().send_keys('7')
         time.sleep(3)
-        self.driver.find_element_by_xpath('//input[@ng-reflect-model="Choice 3"]').clear()
+        add_form.Edit_choice3().clear()
         time.sleep(3)
-        self.driver.find_element_by_xpath('//input[@ng-reflect-model="Choice 3"]').send_keys('6')
+        add_form.Edit_choice3().send_keys('6')
         time.sleep(3)
-        self.driver.find_element_by_xpath('//button[@data-tour="saveQuestion"]').click()
+        add_form.Save_question_button().click()
         time.sleep(5)
 
     def test_tc_11_edit_questionnaire(self):
         time.sleep(3)
         self.driver.find_element_by_xpath('//a[@aria-controls="Edit"]').click()
         time.sleep(4)
-        actions = ActionChains(self.driver)
-        m = self.driver.find_element_by_xpath('//body[1]/app-root[1]/app-master-layout[1]/div[1]/div[1]/app-event-layout[1]/section[1]/div[2]/div[1]/app-event-questionnaire[1]/section[1]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/span[1]/i[1]')
-        actions.move_to_element(m).perform()
+        self.driver.find_element_by_xpath('//app-event-questionnaire[1]/section[1]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/label[1]/input[1]').click()
+        time.sleep(3)
+        self.driver.find_element_by_xpath('//body[1]/app-root[1]/app-master-layout[1]/div[1]/div[1]/app-event-layout[1]/section[1]/div[2]/div[1]/app-event-questionnaire[1]/section[1]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/span[1]/i[1]').click()
         time.sleep(3)
         self.driver.find_element_by_xpath('//app-add-question[1]/div[2]/div[1]/div[2]/div[2]/form[1]/div[1]/div[2]/div[2]/div[1]/p-dropdown[1]/div[1]/div[3]').click()
         time.sleep(3)
@@ -170,9 +173,9 @@ class TestEpo(Baseclass):
         time.sleep(3)
         self.driver.find_element_by_xpath('//app-event-questionnaire[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[2]/form[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/p-multiselect[1]/div[1]/div[3]').click()
         time.sleep(3)
-        self.driver.find_element_by_xpath('//body[1]/div[2]/div[2]/ul[1]/p-multiselectitem[2]/li[1]/div[1]/div[1]').click()
+        self.driver.find_element_by_xpath('//div[@class="ui-multiselect-items-wrapper"]//ul[1]//p-multiselectitem[3]//li[1]//div[1]').click()
         time.sleep(3)
-        self.driver.find_element_by_xpath('//body[1]/div[2]/div[2]/ul[1]/p-multiselectitem[2]/li[1]/div[2]/p-inputswitch[1]/div[1]/span[1]').click()
+        self.driver.find_element_by_xpath('//div[@class="ui-multiselect-items-wrapper"]//ul[1]//p-multiselectitem[3]//div[2]//p-inputswitch//div').click()
         time.sleep(3)
         self.driver.find_element_by_xpath('//a[@class="ui-multiselect-close ui-corner-all"]').click()
         time.sleep(3)
